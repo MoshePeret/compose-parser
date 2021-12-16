@@ -106,7 +106,7 @@ type ServiceConfig struct {
 	Configs         []ServiceConfigObjConfig         `yaml:",omitempty" json:"configs,omitempty"`
 	ContainerName   string                           `mapstructure:"container_name" yaml:"container_name,omitempty" json:"container_name,omitempty"`
 	CredentialSpec  *CredentialSpecConfig            `mapstructure:"credential_spec" yaml:"credential_spec,omitempty" json:"credential_spec,omitempty"`
-	DependsOn       ServiceDependency                `yaml:",omitempty" json:"depends_on,omitempty"`
+	DependsOn       DependsOnConfig                  `mapstructure:"depends_on" yaml:"depends_on,omitempty" json:"depends_on,omitempty"`
 	Deploy          *DeployConfig                    `yaml:",omitempty" json:"deploy,omitempty"`
 	Devices         []string                         `yaml:",omitempty" json:"devices,omitempty"`
 	DNS             StringList                       `yaml:",omitempty" json:"dns,omitempty"`
@@ -243,12 +243,15 @@ const (
 // GetDependencies retrieve all services this service depends on
 func (s ServiceConfig) GetDependencies() []string {
 	dependencies := make(set)
-	for _, dependency := range s.DependsOn.Pre {
-		dependencies.append(dependency)
+	for _, dependency := range s.DependsOn {
+		for preDependency := range dependency.Pre {
+			dependencies.append(preDependency)
+		}
+		for startOrderDep := range dependency.StartOrder {
+			dependencies.append(startOrderDep)
+		}
 	}
-	for _, dependency := range s.DependsOn.StartOrder {
-		dependencies.append(dependency)
-	}
+
 	for _, link := range s.Links {
 		parts := strings.Split(link, ":")
 		if len(parts) == 2 {
@@ -841,16 +844,18 @@ const (
 type DependsOnConfig map[string]ServiceDependency
 
 type PreDependency struct {
+	Condition  string     `yaml:",omitempty" json:"condition,omitempty"`
 	Extensions StringList `yaml:",inline" json:"-"`
 }
 
 type StartOrderDependency struct {
+	Condition  string     `yaml:",omitempty" json:"condition,omitempty"`
 	Extensions StringList `yaml:",inline" json:"-"`
 }
 
 type ServiceDependency struct {
-	Pre        StringList `yaml:",omitempty" json:"pre,omitempty"`
-	StartOrder StringList `yaml:",omitempty" json:"start_order,omitempty"`
+	Pre        map[string]PreDependency        `mapstructure:"pre" yaml:"pre,omitempty" json:"pre,omitempty"`
+	StartOrder map[string]StartOrderDependency `mapstructure:"start_order" yaml:"start_order,omitempty" json:"start_order,omitempty"`
 }
 
 type ExtendsConfig MappingWithEquals

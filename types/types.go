@@ -846,8 +846,8 @@ type StartOrderDependency struct {
 }
 
 type ServiceDependency struct {
-	Pre        map[string]PreDependency        `yaml:",omitempty" json:"pre,omitempty"`
-	StartOrder map[string]StartOrderDependency `yaml:",omitempty" json:"start_order,omitempty"`
+	Pre        StringList `yaml:",omitempty" json:"pre,omitempty"`
+	StartOrder StringList `yaml:",omitempty" json:"start_order,omitempty"`
 }
 
 type ExtendsConfig MappingWithEquals

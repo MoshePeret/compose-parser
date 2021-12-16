@@ -1,4 +1,4 @@
-module github.com/compose-spec/compose-go
+module github.com/MoshPe/compose-parser
 
 go 1.16
 

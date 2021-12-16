@@ -31,7 +31,7 @@ import (
 	"github.com/MoshPe/compose-parser/schema"
 	"github.com/MoshPe/compose-parser/template"
 	"github.com/MoshPe/compose-parser/types"
-	"github.com/MoshPe/godotenv"
+	"github.com/compose-spec/godotenv"
 	"github.com/docker/go-units"
 	"github.com/mattn/go-shellwords"
 	"github.com/mitchellh/mapstructure"

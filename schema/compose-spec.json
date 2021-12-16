@@ -179,7 +179,7 @@
           "type": "object",
           "properties": {
             "pre":{"$ref": "#/definitions/list_of_strings"},
-            "startOrder": {"$ref": "#/definitions/list_of_strings"}
+            "start_order": {"$ref": "#/definitions/list_of_strings"}
           }
         },
         "device_cgroup_rules": {"$ref": "#/definitions/list_of_strings"},

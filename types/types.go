@@ -106,7 +106,7 @@ type ServiceConfig struct {
 	Configs         []ServiceConfigObjConfig         `yaml:",omitempty" json:"configs,omitempty"`
 	ContainerName   string                           `mapstructure:"container_name" yaml:"container_name,omitempty" json:"container_name,omitempty"`
 	CredentialSpec  *CredentialSpecConfig            `mapstructure:"credential_spec" yaml:"credential_spec,omitempty" json:"credential_spec,omitempty"`
-	DependsOn       DependsOnConfig                  `mapstructure:"depends_on" yaml:"depends_on,omitempty" json:"depends_on,omitempty"`
+	DependsOn       *ServiceDependency               `yaml:"depends_on,omitempty" json:"depends_on,omitempty"`
 	Deploy          *DeployConfig                    `yaml:",omitempty" json:"deploy,omitempty"`
 	Devices         []string                         `yaml:",omitempty" json:"devices,omitempty"`
 	DNS             StringList                       `yaml:",omitempty" json:"dns,omitempty"`
@@ -243,7 +243,10 @@ const (
 // GetDependencies retrieve all services this service depends on
 func (s ServiceConfig) GetDependencies() []string {
 	dependencies := make(set)
-	for dependency := range s.DependsOn {
+	for dependency := range s.DependsOn.Pre {
+		dependencies.append(dependency)
+	}
+	for dependency := range s.DependsOn.StartOrder {
 		dependencies.append(dependency)
 	}
 
@@ -839,13 +842,11 @@ const (
 type DependsOnConfig map[string]ServiceDependency
 
 type PreDependency struct {
-	Condition  string     `yaml:",omitempty" json:"condition,omitempty"`
-	Extensions StringList `yaml:",inline" json:"-"`
+	Extensions map[string]interface{} `yaml:",inline" json:"-"`
 }
 
 type StartOrderDependency struct {
-	Condition  string     `yaml:",omitempty" json:"condition,omitempty"`
-	Extensions StringList `yaml:",inline" json:"-"`
+	Extensions map[string]interface{} `yaml:",inline" json:"-"`
 }
 
 type ServiceDependency struct {

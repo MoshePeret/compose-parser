@@ -838,11 +838,11 @@ const (
 type DependsOnConfig map[string]ServiceDependency
 
 type PreDependency struct {
-	Extensions map[string]interface{} `yaml:",inline" json:"-"`
+	Extensions StringList `yaml:",inline" json:"-"`
 }
 
 type StartOrderDependency struct {
-	Extensions map[string]interface{} `yaml:",inline" json:"-"`
+	Extensions StringList `yaml:",inline" json:"-"`
 }
 
 type ServiceDependency struct {

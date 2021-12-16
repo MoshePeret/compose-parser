@@ -106,7 +106,7 @@ type ServiceConfig struct {
 	Configs         []ServiceConfigObjConfig         `yaml:",omitempty" json:"configs,omitempty"`
 	ContainerName   string                           `mapstructure:"container_name" yaml:"container_name,omitempty" json:"container_name,omitempty"`
 	CredentialSpec  *CredentialSpecConfig            `mapstructure:"credential_spec" yaml:"credential_spec,omitempty" json:"credential_spec,omitempty"`
-	DependsOn       DependsOnConfig                  `mapstructure:"depends_on" yaml:"depends_on,omitempty" json:"depends_on,omitempty"`
+	DependsOn       DependsOnConfig                  `yaml:",omitempty" json:"depends_on,omitempty"`
 	Deploy          *DeployConfig                    `yaml:",omitempty" json:"deploy,omitempty"`
 	Devices         []string                         `yaml:",omitempty" json:"devices,omitempty"`
 	DNS             StringList                       `yaml:",omitempty" json:"dns,omitempty"`
@@ -838,14 +838,16 @@ const (
 type DependsOnConfig map[string]ServiceDependency
 
 type PreDependency struct {
-	Condition  string                 `yaml:",omitempty" json:"condition,omitempty"`
+	Extensions map[string]interface{} `yaml:",inline" json:"-"`
+}
+
+type StartOrderDependency struct {
 	Extensions map[string]interface{} `yaml:",inline" json:"-"`
 }
 
 type ServiceDependency struct {
-	Pre        map[string]PreDependency `mapstructure:"pre" yaml:"pre,omitempty" json:"pre,omitempty"`
-	Condition  string                 `yaml:",omitempty" json:"condition,omitempty"`
-	Extensions map[string]interface{} `yaml:",inline" json:"-"`
+	Pre        map[string]PreDependency        `yaml:",omitempty" json:"pre,omitempty"`
+	StartOrder map[string]StartOrderDependency `yaml:",omitempty" json:"start_order,omitempty"`
 }
 
 type ExtendsConfig MappingWithEquals

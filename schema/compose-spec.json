@@ -176,27 +176,11 @@
           "patternProperties": {"^x-": {}}
         },
         "depends_on": {
-          "anyOf": [
-            {"$ref": "#/definitions/list_of_strings"},
-            {"$ref": "#/definitions/pre"},
-            {
-              "type": "object",
-              "additionalProperties": false,
-              "patternProperties": {
-                "^[a-zA-Z0-9._-]+$": {
-                  "type": "object",
-                  "additionalProperties": false,
-                  "properties": {
-                    "condition": {
-                      "type": "string",
-                      "enum": ["service_started", "service_healthy", "service_completed_successfully"]
-                    }
-                  },
-                  "required": ["condition"]
-                }
-              }
-            }
-          ]
+          "type": "object",
+          "properties": {
+            "pre":{"$ref": "#/definitions/list_of_strings"},
+            "startOrder": {"$ref": "#/definitions/list_of_strings"}
+          }
         },
         "device_cgroup_rules": {"$ref": "#/definitions/list_of_strings"},
         "devices": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},

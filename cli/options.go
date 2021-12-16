@@ -24,10 +24,10 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/compose-spec/compose-go/errdefs"
-	"github.com/compose-spec/compose-go/loader"
-	"github.com/compose-spec/compose-go/types"
-	"github.com/compose-spec/godotenv"
+	"github.com/MoshPe/compose-parser/errdefs"
+	"github.com/MoshPe/compose-parser/loader"
+	"github.com/MoshPe/compose-parser/types"
+	"github.com/MoshPe/godotenv"
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
 )

@@ -27,7 +27,7 @@ import (
 	"github.com/MoshPe/compose-parser/errdefs"
 	"github.com/MoshPe/compose-parser/loader"
 	"github.com/MoshPe/compose-parser/types"
-	"github.com/MoshPe/godotenv"
+	"github.com/compose-spec/godotenv"
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
 )

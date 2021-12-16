@@ -27,7 +27,7 @@ import (
 	"strings"
 	"time"
 
-	interp "github.com/compose-spec/compose-go/interpolation"
+	interp "github.com/MoshPe/compose-parser/interpolation"
 	"github.com/MoshPe/compose-parser/schema"
 	"github.com/MoshPe/compose-parser/template"
 	"github.com/MoshPe/compose-parser/types"

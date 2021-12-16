@@ -37,8 +37,8 @@ services:
     networks:
       - frontend
     depends_on:
-      pre:
-        - redis
+       pre:
+         - hi
     deploy:
       replicas: 2
       update_config:
@@ -53,8 +53,8 @@ services:
     networks:
       - backend
     depends_on:
-      start_over:
-        - db
+      pre:
+        - hi
     deploy:
       replicas: 1
       update_config:

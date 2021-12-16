@@ -842,10 +842,12 @@ const (
 type DependsOnConfig map[string]ServiceDependency
 
 type PreDependency struct {
+	Condition  string                 `yaml:",omitempty" json:"condition,omitempty"`
 	Extensions map[string]interface{} `yaml:",inline" json:"-"`
 }
 
 type StartOrderDependency struct {
+	Condition  string                 `yaml:",omitempty" json:"condition,omitempty"`
 	Extensions map[string]interface{} `yaml:",inline" json:"-"`
 }
 

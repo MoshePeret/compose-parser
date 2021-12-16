@@ -837,7 +837,13 @@ const (
 
 type DependsOnConfig map[string]ServiceDependency
 
+type PreDependency struct {
+	Condition  string                 `yaml:",omitempty" json:"condition,omitempty"`
+	Extensions map[string]interface{} `yaml:",inline" json:"-"`
+}
+
 type ServiceDependency struct {
+	Pre        PreDependency          `yaml:",omitempty" json:"pre,omitempty"`
 	Condition  string                 `yaml:",omitempty" json:"condition,omitempty"`
 	Extensions map[string]interface{} `yaml:",inline" json:"-"`
 }

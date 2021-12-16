@@ -843,7 +843,7 @@ type PreDependency struct {
 }
 
 type ServiceDependency struct {
-	Pre        PreDependency          `yaml:",omitempty" json:"pre,omitempty"`
+	Pre        map[string]PreDependency `mapstructure:"pre" yaml:"pre,omitempty" json:"pre,omitempty"`
 	Condition  string                 `yaml:",omitempty" json:"condition,omitempty"`
 	Extensions map[string]interface{} `yaml:",inline" json:"-"`
 }

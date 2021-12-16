@@ -16,7 +16,7 @@
 
 package compatibility
 
-import "github.com/compose-spec/compose-go/types"
+import "github.com/MoshPe/compose-parser/types"
 
 func (c *AllowList) CheckVolumeConfigDriver(config *types.VolumeConfig) {
 	if !c.supported("volumes.driver") && config.Driver != "" {

@@ -178,25 +178,7 @@
         "depends_on": {
           "anyOf": [
             {"$ref": "#/definitions/list_of_strings"},
-            {
-              "type": "object",
-              "additionalProperties": false,
-              "patternProperties": {
-                "^[a-zA-Z0-9._-]+$": {
-                  "type": "object",
-                  "additionalProperties": false,
-                  "properties": {
-                    "pre": {
-                      "type": "array",
-                      "$ref": "#/definitions/list_of_strings"
-                    }
-                  },
-                  "required": [
-                    "pre"
-                  ]
-                }
-              }
-            },
+            {"$ref": "#/definitions/pre"},
             {
               "type": "object",
               "additionalProperties": false,
@@ -492,6 +474,14 @@
       },
       "additionalProperties": false,
       "patternProperties": {"^x-": {}}
+    },
+    
+    "pre": {
+      "id": "#/definitions/pre",
+      "type": "object",
+      "properties": {
+        "pre": {"$ref": "#/definitions/list_of_strings"}
+      }
     },
     "deployment": {
       "id": "#/definitions/deployment",

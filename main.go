@@ -45,6 +45,7 @@ func main() {
 	str, _ := yaml.Marshal(project)
 	fmt.Println(string(str))
 	for _, service := range project.Services {
+		fmt.Println(service.Name)
 		fmt.Println(service.DependsOn)
 	}
 }

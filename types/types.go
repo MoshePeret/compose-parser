@@ -243,13 +243,8 @@ const (
 // GetDependencies retrieve all services this service depends on
 func (s ServiceConfig) GetDependencies() []string {
 	dependencies := make(set)
-	for _, dependency := range s.DependsOn {
-		for preDependency := range dependency.Pre {
-			dependencies.append(preDependency)
-		}
-		for startOrderDep := range dependency.StartOrder {
-			dependencies.append(startOrderDep)
-		}
+	for dependency := range s.DependsOn {
+		dependencies.append(dependency)
 	}
 
 	for _, link := range s.Links {

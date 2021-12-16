@@ -176,8 +176,27 @@
           "patternProperties": {"^x-": {}}
         },
         "depends_on": {
-          "oneOf": [
+          "anyOf": [
             {"$ref": "#/definitions/list_of_strings"},
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "patternProperties": {
+                "^[a-zA-Z0-9._-]+$": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "pre": {
+                      "type": "array",
+                      "$ref": "#/definitions/list_of_strings"
+                    }
+                  },
+                  "required": [
+                    "pre"
+                  ]
+                }
+              }
+            },
             {
               "type": "object",
               "additionalProperties": false,

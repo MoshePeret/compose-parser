@@ -175,50 +175,52 @@
           "additionalProperties": false,
           "patternProperties": {"^x-": {}}
         },
-        "depends_on": {
-          "type": "object",
-          "properties": {
-            "pre":{"oneOf": [
-              {"$ref": "#/definitions/list_of_strings"},
-              {
-                "type": "object",
-                "additionalProperties": false,
-                "patternProperties": {
-                  "^[a-zA-Z0-9._-]+$": {
-                    "type": "object",
-                    "additionalProperties": false,
-                    "properties": {
-                      "condition": {
-                        "type": "string",
-                        "enum": ["service_started", "service_healthy", "service_completed_successfully"]
-                      }
-                    },
-                    "required": ["condition"]
-                  }
+        "depends_on_start_order": {
+          "oneOf": [
+            {"$ref": "#/definitions/list_of_strings"},
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "patternProperties": {
+                "^[a-zA-Z0-9._-]+$": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "condition": {
+                      "type": "string",
+                      "enum": ["service_started", "service_healthy", "service_completed_successfully"]
+                    }
+                  },
+                  "required": ["condition"]
                 }
               }
-            ]},
-            "start_order": {"oneOf": [
-              {"$ref": "#/definitions/list_of_strings"},
-              {
-                "type": "object",
-                "additionalProperties": false,
-                "patternProperties": {
-                  "^[a-zA-Z0-9._-]+$": {
-                    "type": "object",
-                    "additionalProperties": false,
-                    "properties": {
-                      "condition": {
-                        "type": "string",
-                        "enum": ["service_started", "service_healthy", "service_completed_successfully"]
-                      }
-                    },
-                    "required": ["condition"]
-                  }
+            }
+          ]
+        },
+        "pre_run_policy": {"type": "string", "enum": [
+          "sequence", "parallel"
+        ]},
+        "depends_on_pre_run": {
+          "oneOf": [
+            {"$ref": "#/definitions/list_of_strings"},
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "patternProperties": {
+                "^[a-zA-Z0-9._-]+$": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "condition": {
+                      "type": "string",
+                      "enum": ["service_started", "service_healthy", "service_completed_successfully"]
+                    }
+                  },
+                  "required": ["condition"]
                 }
               }
-            ]}
-          }
+            }
+          ]
         },
         "device_cgroup_rules": {"$ref": "#/definitions/list_of_strings"},
         "devices": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},

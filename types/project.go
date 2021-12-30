@@ -151,7 +151,10 @@ func (p Project) withServices(names []string, fn ServiceFunc, done map[string]bo
 		if done[service.Name] {
 			continue
 		}
-		dependencies := service.GetDependencies()
+		dependencies := service.GetPreRunDependencies()
+		for _, s := range service.GetStartOrderDependencies() {
+			dependencies = append(dependencies, s)
+		}
 		if len(dependencies) > 0 {
 			err := p.withServices(dependencies, fn, done)
 			if err != nil {

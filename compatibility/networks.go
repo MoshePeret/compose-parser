@@ -16,7 +16,7 @@
 
 package compatibility
 
-import "github.com/MoshPe/compose-parser/types"
+import "github.com/MoshePeret/compose-parser/types"
 
 func (c *AllowList) CheckNetworkConfig(network *types.NetworkConfig) {
 	c.CheckNetworkConfigDriver(network)

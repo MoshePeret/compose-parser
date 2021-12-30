@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"github.com/MoshPe/compose-parser/loader"
-	"github.com/MoshPe/compose-parser/types"
+	"github.com/MoshePeret/compose-parser/loader"
+	"github.com/MoshePeret/compose-parser/types"
 	"gopkg.in/yaml.v2"
 	"io/ioutil"
 	"log"

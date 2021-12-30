@@ -20,8 +20,8 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/MoshPe/compose-parser/errdefs"
-	"github.com/MoshPe/compose-parser/types"
+	"github.com/MoshePeret/compose-parser/errdefs"
+	"github.com/MoshePeret/compose-parser/types"
 	"github.com/pkg/errors"
 )
 

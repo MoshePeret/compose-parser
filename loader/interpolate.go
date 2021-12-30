@@ -20,8 +20,8 @@ import (
 	"strconv"
 	"strings"
 
-	interp "github.com/MoshPe/compose-parser/interpolation"
-	"github.com/MoshPe/compose-parser/types"
+	interp "github.com/MoshePeret/compose-parser/interpolation"
+	"github.com/MoshePeret/compose-parser/types"
 	"github.com/pkg/errors"
 )
 

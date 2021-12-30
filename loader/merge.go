@@ -20,7 +20,7 @@ import (
 	"reflect"
 	"sort"
 
-	"github.com/MoshPe/compose-parser/types"
+	"github.com/MoshePeret/compose-parser/types"
 	"github.com/imdario/mergo"
 	"github.com/pkg/errors"
 )

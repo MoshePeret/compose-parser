@@ -21,7 +21,7 @@ import (
 	"unicode"
 	"unicode/utf8"
 
-	"github.com/MoshPe/compose-parser/types"
+	"github.com/MoshePeret/compose-parser/types"
 	"github.com/pkg/errors"
 )
 

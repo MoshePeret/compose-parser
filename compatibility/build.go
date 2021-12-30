@@ -16,7 +16,7 @@
 
 package compatibility
 
-import "github.com/MoshPe/compose-parser/types"
+import "github.com/MoshePeret/compose-parser/types"
 
 func (c *AllowList) CheckBuild(service *types.ServiceConfig) bool {
 	if !c.supported("services.build") && service.Build != nil {

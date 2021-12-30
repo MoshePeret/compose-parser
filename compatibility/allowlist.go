@@ -19,7 +19,7 @@ package compatibility
 import (
 	"fmt"
 
-	"github.com/MoshPe/compose-parser/errdefs"
+	"github.com/MoshePeret/compose-parser/errdefs"
 	"github.com/pkg/errors"
 )
 

@@ -20,7 +20,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/MoshPe/compose-parser/template"
+	"github.com/MoshePeret/compose-parser/template"
 	"github.com/pkg/errors"
 )
 

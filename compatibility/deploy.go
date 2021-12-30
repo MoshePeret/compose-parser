@@ -19,7 +19,7 @@ package compatibility
 import (
 	"fmt"
 
-	"github.com/MoshPe/compose-parser/types"
+	"github.com/MoshePeret/compose-parser/types"
 )
 
 func (c *AllowList) CheckDeploy(service *types.ServiceConfig) bool {

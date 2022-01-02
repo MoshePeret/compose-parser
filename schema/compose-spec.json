@@ -175,6 +175,16 @@
           "additionalProperties": false,
           "patternProperties": {"^x-": {}}
         },
+        "init_container": {
+          "id": "#/properties/services",
+          "type": "object",
+          "patternProperties": {
+            "^[a-zA-Z0-9._-]+$": {
+              "$ref": "#/definitions/service"
+            }
+          },
+          "additionalProperties": false
+        },
         "depends_on_start_order": {
           "oneOf": [
             {"$ref": "#/definitions/list_of_strings"},

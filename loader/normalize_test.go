@@ -22,7 +22,7 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/compose-spec/compose-go/types"
+	"github.com/MoshePeret/compose-parser/types"
 	"gopkg.in/yaml.v2"
 	"gotest.tools/v3/assert"
 )

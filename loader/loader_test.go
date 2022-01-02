@@ -26,7 +26,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/compose-spec/compose-go/types"
+	"github.com/MoshePeret/compose-parser/types"
 	"github.com/google/go-cmp/cmp/cmpopts"
 	"github.com/sirupsen/logrus"
 	"gotest.tools/v3/assert"

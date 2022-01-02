@@ -106,6 +106,7 @@ type ServiceConfig struct {
 	ContainerName       string                           `mapstructure:"container_name" yaml:"container_name,omitempty" json:"container_name,omitempty"`
 	CredentialSpec      *CredentialSpecConfig            `mapstructure:"credential_spec" yaml:"credential_spec,omitempty" json:"credential_spec,omitempty"`
 	PreRunPolicy        string                           `mapstructure:"pre_run_policy" yaml:"pre_run_policy,omitempty" json:"pre_run_policy,omitempty"`
+	InitContainer       Services                         `json:"init_container,omitempty"`
 	DependsOnPreRun     DependsOnConfig                  `mapstructure:"depends_on_pre_run" yaml:"depends_on_pre_run,omitempty" json:"depends_on_pre_run,omitempty"`
 	DependsOnStartOrder DependsOnConfig                  `mapstructure:"depends_on_start_order" yaml:"depends_on_start_order,omitempty" json:"depends_on_start_order,omitempty"`
 	Deploy              *DeployConfig                    `yaml:",omitempty" json:"deploy,omitempty"`

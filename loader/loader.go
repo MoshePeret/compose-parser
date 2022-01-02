@@ -424,7 +424,10 @@ func formatInvalidKeyError(keyPrefix string, key interface{}) error {
 // the servicesDict is not validated if directly used. Use Load() to enable validation
 func LoadServices(filename string, servicesDict map[string]interface{}, workingDir string, lookupEnv template.Mapping, opts *Options) ([]types.ServiceConfig, error) {
 	var services []types.ServiceConfig
-
+	//cfg.Services, err = LoadServices(filename, getSection(config, "services"), configDetails.WorkingDir, configDetails.LookupEnv, opts)
+	//if err != nil {
+	//	return nil, err
+	//}
 	x, ok := servicesDict["extensions"]
 	if ok {
 		// as a top-level attribute, "services" doesn't support extensions, and a service can be named `x-foo`
@@ -438,7 +441,14 @@ func LoadServices(filename string, servicesDict map[string]interface{}, workingD
 		if err != nil {
 			return nil, err
 		}
-
+		service := servicesDict[name]
+		initServices := service.(map[string]interface{})
+		if initServices["init_container"] != nil {
+			serviceConfig.InitContainer, err = LoadServices(filename, getSection(initServices, "init_container"), workingDir, lookupEnv, opts)
+			if err != nil {
+				return nil, err
+			}
+		}
 		services = append(services, *serviceConfig)
 	}
 

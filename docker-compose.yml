@@ -36,6 +36,20 @@ services:
     networks:
       - frontend
     pre_run_policy: sequence
+    init_container:
+      hello:
+        image: hello-world
+      db:
+        image: postgres:9.4
+        volumes:
+          - db-data:/var/lib/postgresql/data
+        networks:
+          - backend
+        deploy:
+          placement:
+            max_replicas_per_node: 1
+            constraints:
+              - "node.role==manager"
     depends_on_pre_run:
       - hello
     depends_on_start_order:

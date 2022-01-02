@@ -175,6 +175,9 @@
           "additionalProperties": false,
           "patternProperties": {"^x-": {}}
         },
+        "init_container_policy": {"type": "string", "enum": [
+          "sequence", "parallel"
+        ]},
         "init_container": {
           "id": "#/properties/services",
           "type": "object",
@@ -185,32 +188,7 @@
           },
           "additionalProperties": false
         },
-        "depends_on_start_order": {
-          "oneOf": [
-            {"$ref": "#/definitions/list_of_strings"},
-            {
-              "type": "object",
-              "additionalProperties": false,
-              "patternProperties": {
-                "^[a-zA-Z0-9._-]+$": {
-                  "type": "object",
-                  "additionalProperties": false,
-                  "properties": {
-                    "condition": {
-                      "type": "string",
-                      "enum": ["service_started", "service_healthy", "service_completed_successfully"]
-                    }
-                  },
-                  "required": ["condition"]
-                }
-              }
-            }
-          ]
-        },
-        "pre_run_policy": {"type": "string", "enum": [
-          "sequence", "parallel"
-        ]},
-        "depends_on_pre_run": {
+        "depends_on": {
           "oneOf": [
             {"$ref": "#/definitions/list_of_strings"},
             {

@@ -35,7 +35,7 @@ services:
       - "5000:80"
     networks:
       - frontend
-    pre_run_policy: sequence
+    init_container_policy: sequence
     init_container:
       hello:
         image: hello-world
@@ -50,9 +50,7 @@ services:
             max_replicas_per_node: 1
             constraints:
               - "node.role==manager"
-    depends_on_pre_run:
-      - hello
-    depends_on_start_order:
+    depends_on:
       - db
     deploy:
       replicas: 2

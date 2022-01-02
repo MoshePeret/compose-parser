@@ -105,10 +105,9 @@ type ServiceConfig struct {
 	Configs             []ServiceConfigObjConfig         `yaml:",omitempty" json:"configs,omitempty"`
 	ContainerName       string                           `mapstructure:"container_name" yaml:"container_name,omitempty" json:"container_name,omitempty"`
 	CredentialSpec      *CredentialSpecConfig            `mapstructure:"credential_spec" yaml:"credential_spec,omitempty" json:"credential_spec,omitempty"`
-	PreRunPolicy        string                           `mapstructure:"pre_run_policy" yaml:"pre_run_policy,omitempty" json:"pre_run_policy,omitempty"`
-	InitContainer       Services                         `json:"init_container,omitempty"`
-	DependsOnPreRun     DependsOnConfig                  `mapstructure:"depends_on_pre_run" yaml:"depends_on_pre_run,omitempty" json:"depends_on_pre_run,omitempty"`
-	DependsOnStartOrder DependsOnConfig                  `mapstructure:"depends_on_start_order" yaml:"depends_on_start_order,omitempty" json:"depends_on_start_order,omitempty"`
+	InitContainerPolicy string                           `mapstructure:"init_container_policy" yaml:"init_container_policy,omitempty" json:"init_container_policy,omitempty"`
+	InitContainer       Services                         `json:"init_container,omitempty" yaml:"init_container,omitempty"`
+	DependsOn           DependsOnConfig                  `mapstructure:"depends_on" yaml:"depends_on,omitempty" json:"depends_on,omitempty"`
 	Deploy              *DeployConfig                    `yaml:",omitempty" json:"deploy,omitempty"`
 	Devices             []string                         `yaml:",omitempty" json:"devices,omitempty"`
 	DNS                 StringList                       `yaml:",omitempty" json:"dns,omitempty"`
@@ -173,7 +172,6 @@ type ServiceConfig struct {
 	Volumes             []ServiceVolumeConfig            `yaml:",omitempty" json:"volumes,omitempty"`
 	VolumesFrom         []string                         `mapstructure:"volumes_from" yaml:"volumes_from,omitempty" json:"volumes_from,omitempty"`
 	WorkingDir          string                           `mapstructure:"working_dir" yaml:"working_dir,omitempty" json:"working_dir,omitempty"`
-	DependsPre          *string                          `yaml:",omitempty" json:"DependsPre,omitempty"`
 	DependsStart        *string                          `yaml:",omitempty" json:"DependsStart,omitempty"`
 	Extensions          map[string]interface{}           `yaml:",inline" json:"-"`
 }
@@ -244,41 +242,10 @@ const (
 	NetworkModeContainerPrefix = ContainerPrefix
 )
 
-// GetPreRunDependencies retrieve all services this service depends on
-func (s ServiceConfig) GetPreRunDependencies() []string {
+// GetDependencies retrieve all services this service depends on
+func (s ServiceConfig) GetDependencies() []string {
 	dependencies := make(set)
-	for dependency := range s.DependsOnPreRun {
-		dependencies.append(dependency)
-	}
-	for _, link := range s.Links {
-		parts := strings.Split(link, ":")
-		if len(parts) == 2 {
-			dependencies.append(parts[0])
-		} else {
-			dependencies.append(link)
-		}
-	}
-	if strings.HasPrefix(s.NetworkMode, ServicePrefix) {
-		dependencies.append(s.NetworkMode[len(ServicePrefix):])
-	}
-	if strings.HasPrefix(s.Ipc, ServicePrefix) {
-		dependencies.append(s.Ipc[len(ServicePrefix):])
-	}
-	if strings.HasPrefix(s.Pid, ServicePrefix) {
-		dependencies.append(s.Pid[len(ServicePrefix):])
-	}
-	for _, vol := range s.VolumesFrom {
-		if !strings.HasPrefix(s.Pid, ContainerPrefix) {
-			dependencies.append(vol)
-		}
-	}
-	return dependencies.toSlice()
-}
-
-// GetStartOrderDependencies retrieve all services this service depends on start order
-func (s ServiceConfig) GetStartOrderDependencies() []string {
-	dependencies := make(set)
-	for dependency := range s.DependsOnStartOrder {
+	for dependency := range s.DependsOn {
 		dependencies.append(dependency)
 	}
 	for _, link := range s.Links {
@@ -871,20 +838,8 @@ const (
 
 type DependsOnConfig map[string]ServiceDependency
 
-type StartOrderDependency struct {
-	Condition  string                 `yaml:",omitempty" json:"condition,omitempty"`
-	Extensions map[string]interface{} `yaml:",inline" json:"-"`
-}
-
-type PreRunDependency struct {
-	Condition  string                 `yaml:",omitempty" json:"condition,omitempty"`
-	Extensions map[string]interface{} `yaml:",inline" json:"-"`
-}
-
-// DeployConfig the deployment configuration for a service
 type ServiceDependency struct {
 	Condition  string                 `yaml:",omitempty" json:"condition,omitempty"`
-	pre        StringList             `yaml:"pre,omitempty" json:"pre,omitempty"`
 	Extensions map[string]interface{} `yaml:",inline" json:"-"`
 }
 

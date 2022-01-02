@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/MoshePeret/compose-parser/loader"
 	"github.com/MoshePeret/compose-parser/types"
@@ -50,10 +51,16 @@ func main() {
 
 	for _, service := range project.Services {
 		fmt.Println(service.Name)
-		fmt.Println("pre_run_policy: " + service.PreRunPolicy)
-		fmt.Println(service.DependsOnPreRun)
-		fmt.Println(service.DependsOnStartOrder)
-		fmt.Println(service.InitContainer)
+		fmt.Println("init_container_policy: " + service.InitContainerPolicy)
+		fmt.Printf("DependsOn: ")
+		fmt.Println(service.DependsOn)
+		for _, config := range service.InitContainer {
+			empJSON, err := json.Marshal(config)
+			if err != nil {
+				log.Fatalf(err.Error())
+			}
+			fmt.Printf("\"name\":%s %s\n", config.Name, empJSON)
+		}
 	}
 }
 

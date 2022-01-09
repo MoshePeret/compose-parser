@@ -15,7 +15,7 @@ type depends struct {
 }
 
 func main() {
-	filename := "docker-compose.yml"
+	filename := "executor-compose.yml"
 	workingDir, err := os.Getwd()
 	if err != nil {
 		panic(err)
@@ -51,6 +51,7 @@ func main() {
 
 	for _, service := range project.Services {
 		fmt.Println(service.Name)
+		fmt.Println(service.Platform)
 		fmt.Println("init_container_policy: " + service.InitContainerPolicy)
 		fmt.Printf("DependsOn: ")
 		fmt.Println(service.DependsOn)

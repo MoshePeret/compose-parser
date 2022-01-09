@@ -444,6 +444,9 @@ func LoadServices(filename string, servicesDict map[string]interface{}, workingD
 		service := servicesDict[name]
 		initServices := service.(map[string]interface{})
 		if initServices["init_container"] != nil {
+			if err := checkDependsOnInsideInitContainer(getSection(initServices, "init_container")); err != nil {
+				return nil, err
+			}
 			serviceConfig.InitContainer, err = LoadServices(filename, getSection(initServices, "init_container"), workingDir, lookupEnv, opts)
 			if err != nil {
 				return nil, err
@@ -453,6 +456,16 @@ func LoadServices(filename string, servicesDict map[string]interface{}, workingD
 	}
 
 	return services, nil
+}
+
+func checkDependsOnInsideInitContainer(initContainers map[string]interface{}) error {
+	for containerName, containerFields := range initContainers {
+		initService := containerFields.(map[string]interface{})
+		if initService["depends_on"] != nil {
+			return errors.New("depends_on is not allowed inside an init_container " + containerName)
+		}
+	}
+	return nil
 }
 
 func loadServiceWithExtends(filename, name string, servicesDict map[string]interface{}, workingDir string, lookupEnv template.Mapping, opts *Options, ct *cycleTracker) (*types.ServiceConfig, error) {

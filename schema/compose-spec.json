@@ -74,9 +74,7 @@
     "service": {
       "id": "#/definitions/service",
       "type": "object",
-
       "properties": {
-        "deploy": {"$ref": "#/definitions/deployment"},
         "build": {
           "oneOf": [
             {"type": "string"},

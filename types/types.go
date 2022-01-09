@@ -108,7 +108,6 @@ type ServiceConfig struct {
 	InitContainerPolicy string                           `mapstructure:"init_container_policy" yaml:"init_container_policy,omitempty" json:"init_container_policy,omitempty"`
 	InitContainer       Services                         `json:"init_container,omitempty" yaml:"init_container,omitempty"`
 	DependsOn           DependsOnConfig                  `mapstructure:"depends_on" yaml:"depends_on,omitempty" json:"depends_on,omitempty"`
-	Deploy              *DeployConfig                    `yaml:",omitempty" json:"deploy,omitempty"`
 	Devices             []string                         `yaml:",omitempty" json:"devices,omitempty"`
 	DNS                 StringList                       `yaml:",omitempty" json:"dns,omitempty"`
 	DNSOpts             []string                         `mapstructure:"dns_opt" yaml:"dns_opt,omitempty" json:"dns_opt,omitempty"`
@@ -440,21 +439,6 @@ type LoggingConfig struct {
 	Extensions map[string]interface{} `yaml:",inline" json:"-"`
 }
 
-// DeployConfig the deployment configuration for a service
-type DeployConfig struct {
-	Mode           string         `yaml:",omitempty" json:"mode,omitempty"`
-	Replicas       *uint64        `yaml:",omitempty" json:"replicas,omitempty"`
-	Labels         Labels         `yaml:",omitempty" json:"labels,omitempty"`
-	UpdateConfig   *UpdateConfig  `mapstructure:"update_config" yaml:"update_config,omitempty" json:"update_config,omitempty"`
-	RollbackConfig *UpdateConfig  `mapstructure:"rollback_config" yaml:"rollback_config,omitempty" json:"rollback_config,omitempty"`
-	Resources      Resources      `yaml:",omitempty" json:"resources,omitempty"`
-	RestartPolicy  *RestartPolicy `mapstructure:"restart_policy" yaml:"restart_policy,omitempty" json:"restart_policy,omitempty"`
-	Placement      Placement      `yaml:",omitempty" json:"placement,omitempty"`
-	EndpointMode   string         `mapstructure:"endpoint_mode" yaml:"endpoint_mode,omitempty" json:"endpoint_mode,omitempty"`
-
-	Extensions map[string]interface{} `yaml:",inline" json:"-"`
-}
-
 // HealthCheckConfig the healthcheck configuration for a service
 type HealthCheckConfig struct {
 	Test        HealthCheckTest `yaml:",omitempty" json:"test,omitempty"`
@@ -469,26 +453,6 @@ type HealthCheckConfig struct {
 
 // HealthCheckTest is the command run to test the health of a service
 type HealthCheckTest []string
-
-// UpdateConfig the service update configuration
-type UpdateConfig struct {
-	Parallelism     *uint64  `yaml:",omitempty" json:"parallelism,omitempty"`
-	Delay           Duration `yaml:",omitempty" json:"delay,omitempty"`
-	FailureAction   string   `mapstructure:"failure_action" yaml:"failure_action,omitempty" json:"failure_action,omitempty"`
-	Monitor         Duration `yaml:",omitempty" json:"monitor,omitempty"`
-	MaxFailureRatio float32  `mapstructure:"max_failure_ratio" yaml:"max_failure_ratio,omitempty" json:"max_failure_ratio,omitempty"`
-	Order           string   `yaml:",omitempty" json:"order,omitempty"`
-
-	Extensions map[string]interface{} `yaml:",inline" json:"-"`
-}
-
-// Resources the resource limits and reservations
-type Resources struct {
-	Limits       *Resource `yaml:",omitempty" json:"limits,omitempty"`
-	Reservations *Resource `yaml:",omitempty" json:"reservations,omitempty"`
-
-	Extensions map[string]interface{} `yaml:",inline" json:"-"`
-}
 
 // Resource is a resource to be limited or reserved
 type Resource struct {
@@ -538,25 +502,6 @@ func (u UnitBytes) MarshalYAML() (interface{}, error) {
 // MarshalJSON makes UnitBytes implement json.Marshaler
 func (u UnitBytes) MarshalJSON() ([]byte, error) {
 	return []byte(fmt.Sprintf(`"%d"`, u)), nil
-}
-
-// RestartPolicy the service restart policy
-type RestartPolicy struct {
-	Condition   string    `yaml:",omitempty" json:"condition,omitempty"`
-	Delay       *Duration `yaml:",omitempty" json:"delay,omitempty"`
-	MaxAttempts *uint64   `mapstructure:"max_attempts" yaml:"max_attempts,omitempty" json:"max_attempts,omitempty"`
-	Window      *Duration `yaml:",omitempty" json:"window,omitempty"`
-
-	Extensions map[string]interface{} `yaml:",inline" json:"-"`
-}
-
-// Placement constraints for the service
-type Placement struct {
-	Constraints []string               `yaml:",omitempty" json:"constraints,omitempty"`
-	Preferences []PlacementPreferences `yaml:",omitempty" json:"preferences,omitempty"`
-	MaxReplicas uint64                 `mapstructure:"max_replicas_per_node" yaml:"max_replicas_per_node,omitempty" json:"max_replicas_per_node,omitempty"`
-
-	Extensions map[string]interface{} `yaml:",inline" json:"-"`
 }
 
 // PlacementPreferences is the preferences for a service placement

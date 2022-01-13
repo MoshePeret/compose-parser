@@ -3,7 +3,7 @@ module github.com/MoshePeret/compose-parser
 go 1.17
 
 require (
-	github.com/compose-spec/godotenv v1.1.1
+	github.com/compose-spec/godotenv v1.3.0
 	github.com/distribution/distribution/v3 v3.0.0-20210316161203-a01c71e2477e
 	github.com/docker/go-connections v0.4.0
 	github.com/docker/go-units v0.4.0

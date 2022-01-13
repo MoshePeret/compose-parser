@@ -16,63 +16,55 @@
 
 package compatibility
 
-import (
-	"testing"
-
-	"github.com/MoshePeret/compose-parser/errdefs"
-	"github.com/MoshePeret/compose-parser/loader"
-	"github.com/MoshePeret/compose-parser/types"
-	"gotest.tools/v3/assert"
-)
-
-func TestAllowList(t *testing.T) {
-	var checker Checker = customChecker{
-		&AllowList{
-			Supported: []string{
-				"services.image",
-				"services.network_mode",
-				"services.privileged",
-				"services.networks",
-				"services.scale",
-			},
-		},
-	}
-	dict := []byte(`
-services:
-  foo:
-    image: busybox
-    network_mode: host
-    privileged: true
-    mac_address: "a:b:c:d"
-`)
-
-	project, err := loader.Load(types.ConfigDetails{
-		ConfigFiles: []types.ConfigFile{
-			{Filename: "filename.yml", Content: dict},
-		},
-	})
-	assert.NilError(t, err)
-
-	Check(project, checker)
-	errors := checker.Errors()
-	assert.Check(t, len(errors) == 2)
-	assert.Check(t, errdefs.IsUnsupportedError(errors[0]))
-	assert.Equal(t, errors[0].Error(), "services.mac_address: unsupported attribute")
-
-	assert.Check(t, errdefs.IsUnsupportedError(errors[1]))
-	assert.Equal(t, errors[1].Error(), "services.network_mode=host: unsupported attribute")
-
-	service, err := project.GetService("foo")
-	assert.NilError(t, err)
-	assert.Check(t, service.MacAddress == "")
-}
-
-type customChecker struct {
-	*AllowList
-}
-
-func (c customChecker) CheckNetworkMode(service *types.ServiceConfig) {
-	if service.NetworkMode == "host" {
-		c.Unsupported("services.network_mode=host")
-	}
-}
+//
+//func TestAllowList(t *testing.T) {
+//	var checker Checker = customChecker{
+//		&AllowList{
+//			Supported: []string{
+//				"services.image",
+//				"services.network_mode",
+//				"services.privileged",
+//				"services.networks",
+//				"services.scale",
+//			},
+//		},
+//	}
+//	dict := []byte(`
+//services:
+//  foo:
+//    image: busybox
+//    network_mode: host
+//    privileged: true
+//    mac_address: "a:b:c:d"
+//`)
+//
+//	project, err := loader.Load(types.ConfigDetails{
+//		ConfigFiles: []types.ConfigFile{
+//			{Filename: "filename.yml", Content: dict},
+//		},
+//	})
+//	assert.NilError(t, err)
+//
+//	Check(project, checker)
+//	errors := checker.Errors()
+//	assert.Check(t, len(errors) == 2)
+//	assert.Check(t, errdefs.IsUnsupportedError(errors[0]))
+//	assert.Equal(t, errors[0].Error(), "services.mac_address: unsupported attribute")
+//
+//	assert.Check(t, errdefs.IsUnsupportedError(errors[1]))
+//	assert.Equal(t, errors[1].Error(), "services.network_mode=host: unsupported attribute")
+//
+//	service, err := project.GetService("foo")
+//	assert.NilError(t, err)
+//	assert.Check(t, service.MacAddress == "")
+//}
+//
+//type customChecker struct {
+//	*AllowList
+//}
+//
+//func (c customChecker) CheckNetworkMode(service *types.ServiceConfig) {
+//	if service.NetworkMode == "host" {
+//		c.Unsupported("services.network_mode=host")
+//	}
+//}

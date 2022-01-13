@@ -21,10 +21,11 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/MoshePeret/compose-parser/errdefs"
-	"github.com/MoshePeret/compose-parser/types"
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
+
+	"github.com/MoshePeret/compose-parser/errdefs"
+	"github.com/MoshePeret/compose-parser/types"
 )
 
 // normalize compose project by moving deprecated attributes to their canonical position and injecting implicit defaults

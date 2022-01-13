@@ -26,11 +26,12 @@ import (
 	"testing"
 	"time"
 
-	"github.com/MoshePeret/compose-parser/types"
 	"github.com/google/go-cmp/cmp/cmpopts"
 	"github.com/sirupsen/logrus"
 	"gotest.tools/v3/assert"
 	is "gotest.tools/v3/assert/cmp"
+
+	"github.com/MoshePeret/compose-parser/types"
 )
 
 func buildConfigDetails(yaml string, env map[string]string) types.ConfigDetails {
@@ -663,23 +664,6 @@ networks:
 				HealthCheck: &types.HealthCheckConfig{
 					Retries: uint64Ptr(555),
 					Disable: true,
-				},
-				Deploy: &types.DeployConfig{
-					Replicas: uint64Ptr(555),
-					UpdateConfig: &types.UpdateConfig{
-						Parallelism:     uint64Ptr(555),
-						MaxFailureRatio: 3.14,
-					},
-					RollbackConfig: &types.UpdateConfig{
-						Parallelism:     uint64Ptr(555),
-						MaxFailureRatio: 3.14,
-					},
-					RestartPolicy: &types.RestartPolicy{
-						MaxAttempts: uint64Ptr(555),
-					},
-					Placement: types.Placement{
-						MaxReplicas: 555,
-					},
 				},
 				Ports: []types.ServicePortConfig{
 					{Target: 555, Mode: "ingress", Protocol: "tcp"},

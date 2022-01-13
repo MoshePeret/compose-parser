@@ -21,8 +21,9 @@ import (
 	"unicode"
 	"unicode/utf8"
 
-	"github.com/MoshePeret/compose-parser/types"
 	"github.com/pkg/errors"
+
+	"github.com/MoshePeret/compose-parser/types"
 )
 
 const endOfSpec = rune(0)

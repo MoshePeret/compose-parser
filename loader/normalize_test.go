@@ -22,9 +22,10 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/MoshePeret/compose-parser/types"
 	"gopkg.in/yaml.v2"
 	"gotest.tools/v3/assert"
+
+	"github.com/MoshePeret/compose-parser/types"
 )
 
 func TestNormalizeNetworkNames(t *testing.T) {

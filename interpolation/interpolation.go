@@ -20,8 +20,9 @@ import (
 	"os"
 	"strings"
 
-	"github.com/MoshePeret/compose-parser/template"
 	"github.com/pkg/errors"
+
+	"github.com/MoshePeret/compose-parser/template"
 )
 
 // Options supported by Interpolate

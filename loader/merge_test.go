@@ -22,8 +22,9 @@ import (
 
 	"github.com/imdario/mergo"
 
-	"github.com/MoshePeret/compose-parser/types"
 	"gotest.tools/v3/assert"
+
+	"github.com/MoshePeret/compose-parser/types"
 )
 
 func TestLoadLogging(t *testing.T) {

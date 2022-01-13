@@ -3,16 +3,15 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/MoshePeret/compose-parser/loader"
-	"github.com/MoshePeret/compose-parser/types"
-	"gopkg.in/yaml.v2"
 	"io/ioutil"
 	"log"
 	"os"
-)
 
-type depends struct {
-}
+	"gopkg.in/yaml.v2"
+
+	"github.com/MoshePeret/compose-parser/loader"
+	"github.com/MoshePeret/compose-parser/types"
+)
 
 func main() {
 	filename := "executor-compose.yml"

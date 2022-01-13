@@ -19,10 +19,11 @@ package types
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/docker/go-connections/nat"
 	"sort"
 	"strings"
 	"time"
+
+	"github.com/docker/go-connections/nat"
 )
 
 // Duration is a thin wrapper around time.Duration with improved JSON marshalling

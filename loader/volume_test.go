@@ -20,9 +20,10 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/MoshePeret/compose-parser/types"
 	"gotest.tools/v3/assert"
 	is "gotest.tools/v3/assert/cmp"
+
+	"github.com/MoshePeret/compose-parser/types"
 )
 
 func TestParseVolumeAnonymousVolume(t *testing.T) {

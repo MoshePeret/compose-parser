@@ -78,67 +78,6 @@ func services(workingDir, homeDir string) []types.ServiceConfig {
 				"db":    {Condition: types.ServiceConditionStarted},
 				"redis": {Condition: types.ServiceConditionStarted},
 			},
-			Deploy: &types.DeployConfig{
-				Mode:     "replicated",
-				Replicas: uint64Ptr(6),
-				Labels:   map[string]string{"FOO": "BAR"},
-				RollbackConfig: &types.UpdateConfig{
-					Parallelism:     uint64Ptr(3),
-					Delay:           types.Duration(10 * time.Second),
-					FailureAction:   "continue",
-					Monitor:         types.Duration(60 * time.Second),
-					MaxFailureRatio: 0.3,
-					Order:           "start-first",
-				},
-				UpdateConfig: &types.UpdateConfig{
-					Parallelism:     uint64Ptr(3),
-					Delay:           types.Duration(10 * time.Second),
-					FailureAction:   "continue",
-					Monitor:         types.Duration(60 * time.Second),
-					MaxFailureRatio: 0.3,
-					Order:           "start-first",
-				},
-				Resources: types.Resources{
-					Limits: &types.Resource{
-						NanoCPUs:    "0.001",
-						MemoryBytes: 50 * 1024 * 1024,
-					},
-					Reservations: &types.Resource{
-						NanoCPUs:    "0.0001",
-						MemoryBytes: 20 * 1024 * 1024,
-						GenericResources: []types.GenericResource{
-							{
-								DiscreteResourceSpec: &types.DiscreteGenericResource{
-									Kind:  "gpu",
-									Value: 2,
-								},
-							},
-							{
-								DiscreteResourceSpec: &types.DiscreteGenericResource{
-									Kind:  "ssd",
-									Value: 1,
-								},
-							},
-						},
-					},
-				},
-				RestartPolicy: &types.RestartPolicy{
-					Condition:   types.RestartPolicyOnFailure,
-					Delay:       durationPtr(5 * time.Second),
-					MaxAttempts: uint64Ptr(3),
-					Window:      durationPtr(2 * time.Minute),
-				},
-				Placement: types.Placement{
-					Constraints: []string{"node=foo"},
-					MaxReplicas: uint64(5),
-					Preferences: []types.PlacementPreferences{
-						{
-							Spread: "node.labels.az",
-						},
-					},
-				},
-				EndpointMode: "dnsrr",
-			},
 			Devices:    []string{"/dev/ttyUSB0:/dev/ttyUSB0"},
 			DNS:        []string{"8.8.8.8", "9.9.9.9"},
 			DNSSearch:  []string{"dc1.example.com", "dc2.example.com"},

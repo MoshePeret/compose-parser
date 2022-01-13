@@ -20,9 +20,10 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/pkg/errors"
+
 	"github.com/MoshePeret/compose-parser/errdefs"
 	"github.com/MoshePeret/compose-parser/types"
-	"github.com/pkg/errors"
 )
 
 // checkConsistency validate a compose model is consistent

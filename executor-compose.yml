@@ -35,6 +35,8 @@ services:
           - db-data:/var/lib/postgresql/data
         networks:
           - backend
+        depends_on:
+          - result
     depends_on:
       - db
   result:

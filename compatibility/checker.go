@@ -146,26 +146,6 @@ type Checker interface {
 	CheckFileObjectConfigDriverOpts(s string, config *types.FileObjectConfig)
 	CheckFileObjectConfigTemplateDriver(s string, config *types.FileObjectConfig)
 	CheckDeploy(deploy *types.ServiceConfig) bool
-	CheckDeployEndpointMode(deploy *types.DeployConfig)
-	CheckDeployLabels(deploy *types.DeployConfig)
-	CheckDeployMode(deploy *types.DeployConfig)
-	CheckDeployReplicas(deploy *types.DeployConfig)
-	CheckDeployRestartPolicy(deploy *types.DeployConfig) bool
-	CheckDeployRollbackConfig(deploy *types.DeployConfig) bool
-	CheckDeployUpdateConfig(deploy *types.DeployConfig) bool
-	CheckPlacementConstraints(p *types.Placement)
-	CheckPlacementMaxReplicas(p *types.Placement)
-	CheckPlacementPreferences(p *types.Placement)
-	CheckRestartPolicyDelay(policy *types.RestartPolicy)
-	CheckRestartPolicyCondition(policy *types.RestartPolicy)
-	CheckRestartPolicyMaxAttempts(policy *types.RestartPolicy)
-	CheckRestartPolicyWindow(policy *types.RestartPolicy)
-	CheckUpdateConfigDelay(rollback string, config *types.UpdateConfig)
-	CheckUpdateConfigFailureAction(rollback string, config *types.UpdateConfig)
-	CheckUpdateConfigMaxFailureRatio(rollback string, config *types.UpdateConfig)
-	CheckUpdateConfigMonitor(rollback string, config *types.UpdateConfig)
-	CheckUpdateConfigOrder(rollback string, config *types.UpdateConfig)
-	CheckUpdateConfigParallelism(rollback string, config *types.UpdateConfig)
 	CheckDeployResourcesNanoCPUs(s string, resource *types.Resource)
 	CheckDeployResourcesMemoryBytes(s string, resource *types.Resource)
 	CheckDeployResourcesDevices(s string, resource *types.Resource)
@@ -174,8 +154,6 @@ type Checker interface {
 	CheckDeployResourcesDevicesIDs(s string, r types.DeviceRequest)
 	CheckDeployResourcesDevicesDriver(s string, r types.DeviceRequest)
 	CheckDeployResourcesGenericResources(s string, resource *types.Resource)
-	CheckDeployResourcesLimits(deploy *types.DeployConfig) bool
-	CheckDeployResourcesReservations(deploy *types.DeployConfig) bool
 	CheckHealthCheck(service *types.ServiceConfig) bool
 	CheckLogging(service *types.ServiceConfig) bool
 	CheckNetworks(service *types.ServiceConfig) bool
@@ -257,48 +235,6 @@ func CheckServiceConfig(service *types.ServiceConfig, c Checker) {
 	c.CheckContainerName(service)
 	c.CheckCredentialSpec(service)
 	c.CheckDependsOn(service)
-	if service.Deploy != nil && c.CheckDeploy(service) {
-		c.CheckDeployEndpointMode(service.Deploy)
-		c.CheckDeployLabels(service.Deploy)
-		c.CheckDeployMode(service.Deploy)
-		c.CheckPlacementConstraints(&service.Deploy.Placement)
-		c.CheckPlacementMaxReplicas(&service.Deploy.Placement)
-		c.CheckPlacementPreferences(&service.Deploy.Placement)
-		c.CheckDeployReplicas(service.Deploy)
-		if service.Deploy.Resources.Limits != nil && c.CheckDeployResourcesLimits(service.Deploy) {
-			c.CheckDeployResourcesNanoCPUs(ResourceLimits, service.Deploy.Resources.Limits)
-			c.CheckDeployResourcesMemoryBytes(ResourceLimits, service.Deploy.Resources.Limits)
-			c.CheckDeployResourcesGenericResources(ResourceLimits, service.Deploy.Resources.Limits)
-		}
-		if service.Deploy.Resources.Reservations != nil && c.CheckDeployResourcesReservations(service.Deploy) {
-			c.CheckDeployResourcesNanoCPUs(ResourceReservations, service.Deploy.Resources.Reservations)
-			c.CheckDeployResourcesMemoryBytes(ResourceReservations, service.Deploy.Resources.Reservations)
-			c.CheckDeployResourcesGenericResources(ResourceReservations, service.Deploy.Resources.Reservations)
-			c.CheckDeployResourcesDevices(ResourceReservations, service.Deploy.Resources.Reservations)
-		}
-		if service.Deploy.RestartPolicy != nil && c.CheckDeployRestartPolicy(service.Deploy) {
-			c.CheckRestartPolicyCondition(service.Deploy.RestartPolicy)
-			c.CheckRestartPolicyDelay(service.Deploy.RestartPolicy)
-			c.CheckRestartPolicyMaxAttempts(service.Deploy.RestartPolicy)
-			c.CheckRestartPolicyWindow(service.Deploy.RestartPolicy)
-		}
-		if service.Deploy.UpdateConfig != nil && c.CheckDeployUpdateConfig(service.Deploy) {
-			c.CheckUpdateConfigDelay(UpdateConfigUpdate, service.Deploy.UpdateConfig)
-			c.CheckUpdateConfigFailureAction(UpdateConfigUpdate, service.Deploy.UpdateConfig)
-			c.CheckUpdateConfigMaxFailureRatio(UpdateConfigUpdate, service.Deploy.UpdateConfig)
-			c.CheckUpdateConfigMonitor(UpdateConfigUpdate, service.Deploy.UpdateConfig)
-			c.CheckUpdateConfigOrder(UpdateConfigUpdate, service.Deploy.UpdateConfig)
-			c.CheckUpdateConfigParallelism(UpdateConfigUpdate, service.Deploy.UpdateConfig)
-		}
-		if service.Deploy.RollbackConfig != nil && c.CheckDeployRollbackConfig(service.Deploy) {
-			c.CheckUpdateConfigDelay(UpdateConfigRollback, service.Deploy.RollbackConfig)
-			c.CheckUpdateConfigFailureAction(UpdateConfigRollback, service.Deploy.RollbackConfig)
-			c.CheckUpdateConfigMaxFailureRatio(UpdateConfigRollback, service.Deploy.RollbackConfig)
-			c.CheckUpdateConfigMonitor(UpdateConfigRollback, service.Deploy.RollbackConfig)
-			c.CheckUpdateConfigOrder(UpdateConfigRollback, service.Deploy.RollbackConfig)
-			c.CheckUpdateConfigParallelism(UpdateConfigRollback, service.Deploy.RollbackConfig)
-		}
-	}
 	c.CheckDevices(service)
 	c.CheckDNS(service)
 	c.CheckDNSOpts(service)

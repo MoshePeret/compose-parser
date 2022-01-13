@@ -1,6 +1,6 @@
 module github.com/MoshePeret/compose-parser
 
-go 1.16
+go 1.17
 
 require (
 	github.com/compose-spec/godotenv v1.1.1
@@ -19,4 +19,10 @@ require (
 	golang.org/x/sys v0.0.0-20200323222414-85ca7c5b95cd // indirect
 	gopkg.in/yaml.v2 v2.4.0
 	gotest.tools/v3 v3.0.3
+)
+
+require (
+	github.com/xeipuuv/gojsonpointer v0.0.0-20180127040702-4e3ac2762d5f // indirect
+	github.com/xeipuuv/gojsonreference v0.0.0-20180127040603-bd5ef7bd5415 // indirect
+	golang.org/x/xerrors v0.0.0-20191204190536-9bdfabe68543 // indirect
 )

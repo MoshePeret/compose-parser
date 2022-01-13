@@ -24,12 +24,13 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/MoshePeret/compose-parser/errdefs"
-	"github.com/MoshePeret/compose-parser/loader"
-	"github.com/MoshePeret/compose-parser/types"
 	"github.com/compose-spec/godotenv"
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
+
+	"github.com/MoshePeret/compose-parser/errdefs"
+	"github.com/MoshePeret/compose-parser/loader"
+	"github.com/MoshePeret/compose-parser/types"
 )
 
 // ProjectOptions groups the command line options recommended for a Compose implementation

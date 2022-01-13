@@ -27,10 +27,6 @@ import (
 	"strings"
 	"time"
 
-	interp "github.com/MoshePeret/compose-parser/interpolation"
-	"github.com/MoshePeret/compose-parser/schema"
-	"github.com/MoshePeret/compose-parser/template"
-	"github.com/MoshePeret/compose-parser/types"
 	"github.com/compose-spec/godotenv"
 	"github.com/docker/go-units"
 	"github.com/mattn/go-shellwords"
@@ -38,6 +34,11 @@ import (
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
 	"gopkg.in/yaml.v2"
+
+	interp "github.com/MoshePeret/compose-parser/interpolation"
+	"github.com/MoshePeret/compose-parser/schema"
+	"github.com/MoshePeret/compose-parser/template"
+	"github.com/MoshePeret/compose-parser/types"
 )
 
 // Options supported by Load

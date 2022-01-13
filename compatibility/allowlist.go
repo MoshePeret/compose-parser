@@ -19,8 +19,9 @@ package compatibility
 import (
 	"fmt"
 
-	"github.com/MoshePeret/compose-parser/errdefs"
 	"github.com/pkg/errors"
+
+	"github.com/MoshePeret/compose-parser/errdefs"
 )
 
 // AllowList implements the Checker interface by rejecting all attributes that are not listed as "supported".

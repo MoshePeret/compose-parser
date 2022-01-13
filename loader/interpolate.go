@@ -20,9 +20,10 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/pkg/errors"
+
 	interp "github.com/MoshePeret/compose-parser/interpolation"
 	"github.com/MoshePeret/compose-parser/types"
-	"github.com/pkg/errors"
 )
 
 var interpolateTypeCastMapping = map[interp.Path]interp.Cast{

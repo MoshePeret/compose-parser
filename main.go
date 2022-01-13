@@ -52,6 +52,7 @@ func main() {
 		fmt.Println(service.Name)
 		fmt.Println(service.Labels)
 		fmt.Println("init_container_policy: " + service.InitContainerPolicy)
+		fmt.Println("dockerFile:  " + service.Dockerfile)
 		fmt.Printf("DependsOn: ")
 		fmt.Println(service.DependsOn)
 		for _, config := range service.InitContainer {

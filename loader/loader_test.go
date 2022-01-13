@@ -204,7 +204,8 @@ var sampleConfig = types.Config{
 			Networks: map[string]*types.ServiceNetworkConfig{
 				"with_me": nil,
 			},
-			Scale: 1,
+			Scale:               1,
+			InitContainerPolicy: "parallel",
 		},
 		{
 			Name:        "bar",
@@ -213,7 +214,8 @@ var sampleConfig = types.Config{
 			Networks: map[string]*types.ServiceNetworkConfig{
 				"with_ipam": nil,
 			},
-			Scale: 1,
+			Scale:               1,
+			InitContainerPolicy: "parallel",
 		},
 	},
 	Networks: map[string]types.NetworkConfig{

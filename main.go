@@ -51,7 +51,7 @@ func main() {
 
 	for _, service := range project.Services {
 		fmt.Println(service.Name)
-		fmt.Println(service.Platform)
+		fmt.Println(service.Labels)
 		fmt.Println("init_container_policy: " + service.InitContainerPolicy)
 		fmt.Printf("DependsOn: ")
 		fmt.Println(service.DependsOn)

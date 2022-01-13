@@ -452,6 +452,9 @@ func LoadServices(filename string, servicesDict map[string]interface{}, workingD
 				return nil, err
 			}
 		}
+		if serviceConfig.InitContainerPolicy == "" {
+			serviceConfig.InitContainerPolicy = "parallel"
+		}
 		services = append(services, *serviceConfig)
 	}
 

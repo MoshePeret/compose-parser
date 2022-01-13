@@ -24,6 +24,8 @@ services:
     networks:
       - frontend
     init_container_policy: sequence
+    labels:
+      autoheal: "true"
     init_container:
       hello:
         image: hello-world

@@ -1438,6 +1438,7 @@ networks:
 					"network1": nil,
 					"network3": nil,
 				},
+				InitContainerPolicy: "parallel",
 			},
 		},
 		Networks: map[string]types.NetworkConfig{
@@ -1596,7 +1597,8 @@ secrets:
 						Source: "config",
 					},
 				},
-				Scale: 1,
+				InitContainerPolicy: "parallel",
+				Scale:               1,
 				Secrets: []types.ServiceSecretConfig{
 					{
 						Source: "secret",
@@ -1662,7 +1664,8 @@ secrets:
 						Source: "config",
 					},
 				},
-				Scale: 1,
+				InitContainerPolicy: "parallel",
+				Scale:               1,
 				Secrets: []types.ServiceSecretConfig{
 					{
 						Source: "secret",
@@ -1735,9 +1738,10 @@ func TestLoadWithExtends(t *testing.T) {
 				"file":    strPtr("compose-test-extends-imported.yaml"),
 				"service": strPtr("imported"),
 			},
-			Environment: types.MappingWithEquals{},
-			Networks:    map[string]*types.ServiceNetworkConfig{"default": nil},
-			Scale:       1,
+			Environment:         types.MappingWithEquals{},
+			Networks:            map[string]*types.ServiceNetworkConfig{"default": nil},
+			Scale:               1,
+			InitContainerPolicy: "parallel",
 		},
 	}
 	assert.Check(t, is.DeepEqual(expServices, actual.Services))
@@ -1748,13 +1752,6 @@ func TestServiceDeviceRequestCount(t *testing.T) {
 services:
   hello-world:
     image: redis:alpine
-    deploy:
-      resources:
-        reservations:
-          devices:
-            - driver: nvidia
-              capabilities: [gpu]
-              count: all
 `)
 	assert.NilError(t, err)
 }
@@ -1764,13 +1761,6 @@ func TestServiceDeviceRequestCountType(t *testing.T) {
 services:
   hello-world:
     image: redis:alpine
-    deploy:
-      resources:
-        reservations:
-          devices:
-            - driver: nvidia
-              capabilities: [gpu]
-              count: somestring
 `)
 	assert.ErrorContains(t, err, "invalid string value for 'count' (the only value allowed is 'all')")
 }

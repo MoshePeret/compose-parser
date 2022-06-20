@@ -228,6 +228,7 @@ func isSpace(r rune) bool {
 	return false
 }
 
+
 // isNewLine reports whether the rune is a new line character
 func isNewLine(r rune) bool {
 	return r == '\n'
